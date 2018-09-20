@@ -74,6 +74,12 @@ def main():
     plt.savefig('./figures/output.png', transparent=True, bbox_inches='tight', pad_inches=0)
     plt.show()
 
+    for filename in os.listdir('./test_images/'):
+        image = mpimg.imread('./test_images/' + filename)
+        weighted_img = draw_lane_lines(image, parameters)
+        dest_file = './test_images_output/' + filename
+        mpimg.imsave(dest_file, weighted_img)
+
     
 if __name__ == '__main__':
     main()
