@@ -1,5 +1,6 @@
 import math
 
+import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 
@@ -88,15 +89,28 @@ def draw_separated_lines(img, lines, height, vanishing_y=320, color=[255, 0, 0],
                 right_slopes.append(slope)
                 vanishing_x = (vanishing_y-y1)/slope + x1
                 right_vanishing_xs.append(vanishing_x)
+    # plt.imshow(img, cmap='gray') # for debug
+    # plt.savefig('./figures/separate.png', transparent=True, bbox_inches='tight', pad_inches=0)
+    # plt.show() # for debug
 
     left_slope_ave = np.average(np.array(left_slopes))
     left_vanishing_x_ave = np.average(np.array(left_vanishing_xs))
     right_slope_ave = np.average(np.array(right_slopes))
     right_vanishing_x_ave = np.average(np.array(right_vanishing_xs))
+    # cv2.circle(img, (int(left_vanishing_x_ave), vanishing_y), 15, [255, 0, 0], -1) # for debug
+    # cv2.circle(img, (int(right_vanishing_x_ave), vanishing_y), 15, [0, 0, 255], -1) # for debug
+    # plt.imshow(img, cmap='gray') # for debug
+    # plt.savefig('./figures/intersection.png', transparent=True, bbox_inches='tight', pad_inches=0)
+    # plt.show() # for debug
 
     # Calculate bottom points of both lines
     left_bottom_x = (height-vanishing_y)/left_slope_ave + left_vanishing_x_ave
     right_bottom_x = (height-vanishing_y)/right_slope_ave + right_vanishing_x_ave
+    # cv2.circle(img, (int(left_bottom_x), height), 15, [255, 0, 0], -1) # for debug
+    # cv2.circle(img, (int(right_bottom_x), height), 15, [0, 0, 255], -1) # for debug
+    # plt.imshow(img, cmap='gray') # for debug
+    # plt.savefig('./figures/bottom.png', transparent=True, bbox_inches='tight', pad_inches=0)
+    # plt.show() # for debug
 
     # Draw the full extend of the lane
     cv2.line(img, (int(left_vanishing_x_ave), vanishing_y), (int(left_bottom_x), height), color, thickness)
@@ -110,6 +124,7 @@ def hough_lines(img, rho, theta, threshold, min_line_len, max_line_gap):
     """
     lines = cv2.HoughLinesP(img, rho, theta, threshold, np.array([]), minLineLength=min_line_len, maxLineGap=max_line_gap)
     line_img = np.zeros((img.shape[0], img.shape[1], 3), dtype=np.uint8)
+    # draw_lines(line_img, lines, thickness=2)
     draw_separated_lines(line_img, lines, img.shape[0], thickness=10)
     return line_img
 

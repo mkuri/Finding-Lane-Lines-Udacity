@@ -20,15 +20,23 @@ def read_image():
 
 def draw_lane_lines(image, parameters):
     grayimg = helper.grayscale(image)
+    # plt.imshow(grayimg, cmap='gray')
+    # plt.savefig('./figures/grayimg.png', transparent=True, bbox_inches='tight', pad_inches=0)
 
     blurred_grayimg = helper.gaussian_blur(grayimg,
                                            parameters['kernel_size'])
+    # plt.imshow(blurred_grayimg, cmap='gray')
+    # plt.savefig('./figures/blurred.png', transparent=True, bbox_inches='tight', pad_inches=0)
 
     edges = helper.canny(blurred_grayimg,
                          parameters['low_threshold'],
                          parameters['high_threshold'])
+    # plt.imshow(edges, cmap='gray')
+    # plt.savefig('./figures/edges.png', transparent=True, bbox_inches='tight', pad_inches=0)
 
     masked_edges = helper.region_of_interest(edges, parameters['vertices'])
+    # plt.imshow(masked_edges, cmap='gray')
+    # plt.savefig('./figures/masked_edges.png', transparent=True, bbox_inches='tight', pad_inches=0)
 
     lines_img = helper.hough_lines(masked_edges,
                                    parameters['hough']['rho'],
@@ -36,6 +44,8 @@ def draw_lane_lines(image, parameters):
                                    parameters['hough']['threshold'],
                                    parameters['hough']['min_line_len'],
                                    parameters['hough']['max_line_gap'],)
+    # plt.imshow(lines_img, cmap='gray')
+    # plt.savefig('./figures/lines.png', transparent=True, bbox_inches='tight', pad_inches=0)
                                    
     weighted_img = helper.weighted_img(lines_img, image, alpha=0.8)
 
@@ -61,6 +71,7 @@ def main():
 
     image = mpimg.imread('./test_images/solidWhiteRight.jpg')
     plt.imshow(draw_lane_lines(image, parameters), cmap='gray')
+    plt.savefig('./figures/output.png', transparent=True, bbox_inches='tight', pad_inches=0)
     plt.show()
 
     
