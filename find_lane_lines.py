@@ -1,11 +1,13 @@
 import math
 import os
+import functools
 
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import numpy as np
 import cv2
+from moviepy.editor import VideoFileClip
 
 import helper
 
@@ -69,16 +71,22 @@ def main():
         },
     }
 
-    image = mpimg.imread('./test_images/solidWhiteRight.jpg')
-    plt.imshow(draw_lane_lines(image, parameters), cmap='gray')
-    plt.savefig('./figures/output.png', transparent=True, bbox_inches='tight', pad_inches=0)
-    plt.show()
+    # image = mpimg.imread('./test_images/solidWhiteRight.jpg')
+    # plt.imshow(draw_lane_lines(image, parameters), cmap='gray')
+    # plt.savefig('./figures/output.png', transparent=True, bbox_inches='tight', pad_inches=0)
+    # plt.show()
 
-    for filename in os.listdir('./test_images/'):
-        image = mpimg.imread('./test_images/' + filename)
-        weighted_img = draw_lane_lines(image, parameters)
-        dest_file = './test_images_output/' + filename
-        mpimg.imsave(dest_file, weighted_img)
+    # for filename in os.listdir('./test_images/'):
+    #     image = mpimg.imread('./test_images/' + filename)
+    #     weighted_img = draw_lane_lines(image, parameters)
+    #     dest_file = './test_images_output/' + filename
+    #     mpimg.imsave(dest_file, weighted_img)
+
+    process_image = functools.partial(draw_lane_lines, parameters=parameters)
+    video_output = './test_videos_output/solidWhiteRight.mp4'
+    clipl = VideoFileClip('./test_videos/solidWhiteRight.mp4')
+    clip = clipl.fl_image(process_image)
+    clip.write_videofile(video_output, audio=False)
 
     
 if __name__ == '__main__':
