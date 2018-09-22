@@ -12,6 +12,9 @@ The goals / steps of this project are the following:
 * Make a pipeline that finds lane lines on the road
 * Reflect on your work in a written report
 
+
+[//]: # (Image References)
+
 [grayimg]: ./figures/grayimg.png "Grayscale"
 [blurred]: ./figures/blurred.png "Blurred"
 [edges]: ./figures/edges.png "Edges"
@@ -22,6 +25,7 @@ The goals / steps of this project are the following:
 [bottom]: ./figures/bottom.png "Bottoms"
 [output]: ./figures/output.png "Output"
 [wet]: ./figures/wet.jpg "Wet"
+
 ---
 
 ### Reflection
