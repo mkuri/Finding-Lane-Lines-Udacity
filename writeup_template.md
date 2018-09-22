@@ -92,6 +92,7 @@ If you'd like to include images to show how the pipeline works, here is how to i
 1) When resolution of images are changed, my pipeline would get wrong line lanes because mask and finding lane process is rely on horizon line defined y = 320.
 
 2) When road surface is wetty and reflects lights of signals and street lights, my pipeline would get wrong line because it can't distinguish between edges from lanes and lights.
+
     ![][wet]
 
 3) When the car turn, my pipeline would get wrong line lanes because my pipeline distinguish the left lane and the right lane by slopes of line segments.
